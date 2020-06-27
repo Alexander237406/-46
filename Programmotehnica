@@ -1,0 +1,54 @@
+#include "angles.h"
+
+bool angles::IsMarkWin(angles::CellState mark) {
+    bool isBlackWin = false;
+    for(int x = 0; x < stateSize; x++) {
+        for (int y = 0; y < stateSize; y++) {
+            if (mark == cWhite) {
+                if (x > 3 && y < 4 &&state[x][y]!=cWhite)
+                    return false;
+            }
+            if (mark == cBlack) {
+                if (x < 4 && y > 3 && state[x][y] != cBlack)
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
+angles::angles() {
+    for(int x = 0; x < stateSize; x++) {
+        for (int y = 0; y < stateSize; y++) {
+            if (x > 3 && y < 4)
+                state[x][y] = cWhite;
+            if (x < 4 && y > 3)
+                state[x][y] = cBlack;
+        }
+    }
+}
+#ifndef UNTITLED_ANGLES_H
+#define UNTITLED_ANGLES_H
+
+
+class angles {
+public:
+    angles();
+    enum CellState{cEmpty, cBlack, cWhite};
+    bool IsMarkWin(CellState mark);
+private:
+    static constexpr int stateSize = 8;
+    static constexpr int playersStateSize = 4;
+    CellState state[stateSize][stateSize]{cEmpty};
+};
+
+
+#endif
+#include <iostream>
+#include "angles.h"
+
+int main() {
+    angles angles;
+    std::cout << angles.IsMarkWin(angles::cBlack) << angles.IsMarkWin(angles::cWhite) <<std::endl;
+    return 0;
+}
